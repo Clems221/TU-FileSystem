@@ -34,7 +34,7 @@ namespace TU
             Dossier1 = (Directory)current.cd("Dossier1");
             Dossier2 = (Directory)current.cd("Dossier2");
             Dossier3 = (Directory)current.cd("Dossier3");
-
+            
 
             CFile = current.cd("CFile");
             Dossier2 = (Directory)current.cd("Dossier2");
@@ -56,6 +56,11 @@ namespace TU
             Assert.AreEqual(listels.Count(), 4);
         }
         [TestMethod]
+        public void lsFalse()
+        {
+            Assert.AreNotEqual(current.ls().Count, 2);
+        }
+        [TestMethod]
         public void mkdir()
         {
             Assert.IsTrue(current.mkdir("Essai"));
@@ -64,7 +69,12 @@ namespace TU
         public void mkdirNoWrite()
         {
             current.chmod(1);
-            Assert.IsFalse(current.mkdir("Essai"));
+            Assert.IsFalse(current.mkdir("Dossier1"));
+        }
+        [TestMethod]
+        public void mkdirExist()
+        {
+            Assert.IsFalse(current.mkdir("Dossier1"));
         }
 
         [TestMethod]
@@ -117,30 +127,29 @@ namespace TU
             current.chmod(1);
             Assert.IsFalse(current.createNewFile("Test"));
         }
-        /*[TestMethod]
-        public void CreateNewFileExistant()
-        {
-            Assert.IsTrue(current.createNewFile("Dossier2"));
-        }*/
+
 
 
 
         [TestMethod]
         public void delete()
         {
-            bool fichier = current.delete("Dossier1");
-            Assert.IsTrue(fichier, "Dossier1");
+            Assert.IsTrue(current.delete("Dossier1"));
         }
 
+
+
         [TestMethod]
-        public void renameTo()
+        public void RenameTo()
         {
-            Assert.IsTrue(current.renameTo("NouveauDossier1", "test"));
+            Assert.IsTrue(current.renameTo("Dossier1", "test"));
         }
+
+
         [TestMethod]
         public void IsFile()
         {
-            Assert.IsFalse(Dossier2.isFile());
+            Assert.IsFalse(current.isFile());
         }
 
         [TestMethod]
@@ -165,6 +174,7 @@ namespace TU
             Directory Essai2 = (Directory)Essai.cd("Dossier2");
             Assert.AreEqual(Essai2.getRoot().getName(), "Dossier1");
         }
+
 
 
         [TestMethod]
